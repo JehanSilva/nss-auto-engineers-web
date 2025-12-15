@@ -28,9 +28,59 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: 0.5rem 1rem; /* Changed from "1rem 0" to add side spacing */
   height: var(--header-height);
+  width: 100%; /* Ensures it uses full width */
 }
+/* Container for Logo + Text */
+/* Container: Stacks Logo and Text Vertically and Centers them */
+/* Container: Stacks Logo and Text Vertically */
+.brand-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the text under the logo */
+  justify-content: center;
+  line-height: 1; /* Tightens the spacing */
+}
+
+/* Logo Image Sizing */
+.site-logo {
+  height: 38px; /* Slightly adjusted for better proportion */
+  width: auto;
+  margin-bottom: 3px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Text Sizing - FORCED SMALLER */
+h1.brand {
+  font-size: 10px !important; /* Force size to be small (approx 0.6rem) */
+  font-weight: 700;
+  margin: 0;
+  padding: 0;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* Optional: Slight adjustment for larger screens if 10px is too small for desktop */
+@media (min-width: 900px) {
+  h1.brand {
+    font-size: 12px !important;
+  }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .site-logo {
+    height: 35px;
+  }
+  .brand {
+    font-size: 0.65rem; /* Even smaller on mobile */
+  }
+}
+
 .brand {
   margin: 0;
   font-size: 1.25rem;
@@ -51,7 +101,14 @@ body {
     rgba(255, 255, 255, 0.6),
     rgba(255, 255, 255, 0.9)
   );
-  padding: 2.25rem 0;
+  padding: 0; /* Removed the huge 2.25rem padding */
+  padding-bottom: 2rem; /* Keeps some space at the very bottom only */
+}
+.hero-banner {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 1.5rem; /* Controls space between Image and Text */
 }
 .hero .container {
   display: grid;
@@ -100,8 +157,9 @@ body {
 }
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  /* Automatically fit columns with a minimum width of 250px */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
 }
 .service-card {
   background: var(--card);
