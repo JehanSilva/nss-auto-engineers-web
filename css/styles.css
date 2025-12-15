@@ -34,7 +34,6 @@ body {
 }
 /* Container for Logo + Text */
 /* Container: Stacks Logo and Text Vertically and Centers them */
-/* Container: Stacks Logo and Text Vertically */
 .brand-group {
   display: flex;
   flex-direction: column;
@@ -321,10 +320,119 @@ h1.brand {
   border: 1px solid #e2e2e2;
   border-radius: 6px;
 }
+/* --- Workshop Info Styles --- */
 .contact-info {
   background: var(--card);
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 1.5rem;
+}
+
+.info-item svg {
+  color: var(--accent); /* Uses your red color */
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.info-item p {
+  margin: 0.2rem 0;
+  line-height: 1.4;
+  color: #444;
+}
+
+.info-item strong {
+  display: block;
+  font-size: 0.95rem;
+  color: #222;
+  margin-bottom: 0.2rem;
+}
+
+/* Clickable Links styling */
+.link-small {
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.link-small:hover {
+  text-decoration: underline;
+}
+
+.link-phone {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 600;
+}
+.link-phone:hover {
+  color: var(--accent);
+}
+
+/* --- Footer & Payment Badges --- */
+.info-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap; /* Allows wrapping on small screens */
+  gap: 1.5rem;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.payment-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.pay-icon {
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.pay-icon:hover {
+  transform: translateY(-2px);
+}
+
+.footer-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.social-links a {
+  color: #555;
+  transition: color 0.2s;
+  background: #f5f5f5;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-links a:hover {
+  color: var(--accent);
+  background: #fff0f0;
 }
 
 .site-footer {
