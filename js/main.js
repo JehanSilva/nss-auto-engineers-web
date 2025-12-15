@@ -1,10 +1,14 @@
-// Simple site interactions: year, smooth scrolling, lightbox gallery, and contact form
+// Simple site interactions: year, smooth scrolling, lightbox gallery, and AJAX contact form
 document.addEventListener("DOMContentLoaded", function () {
-  // Year
+  // -----------------------------------------------------------------
+  // 1. Dynamic Year Update
+  // -----------------------------------------------------------------
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Smooth scroll for anchor links
+  // -----------------------------------------------------------------
+  // 2. Smooth Scrolling for Anchor Links
+  // -----------------------------------------------------------------
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", function (e) {
       const href = this.getAttribute("href");
@@ -18,7 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Gallery lightbox
+  // -----------------------------------------------------------------
+  // 3. Gallery Lightbox
+  // -----------------------------------------------------------------
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const lightboxClose = document.getElementById("lightbox-close");
@@ -37,52 +43,94 @@ document.addEventListener("DOMContentLoaded", function () {
     lightboxImg.src = "";
   }
 
+  // Open lightbox on image click
   document.querySelectorAll(".gallery-item").forEach((img) => {
     img.addEventListener("click", () => openLightbox(img.src, img.alt));
   });
 
-  lightboxClose.addEventListener("click", closeLightbox);
-  lightbox.addEventListener("click", function (e) {
-    if (e.target === this) closeLightbox();
-  });
+  // Close lightbox on button click
+  if (lightboxClose) {
+    lightboxClose.addEventListener("click", closeLightbox);
+  }
+
+  // Close lightbox on background click
+  if (lightbox) {
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === this) closeLightbox();
+    });
+  }
+
+  // Close lightbox on Escape key
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeLightbox();
   });
 
-  // Basic contact form handling
+  // -----------------------------------------------------------------
+  // 4. Contact Form Handling (AJAX via FormSubmit.co)
+  // -----------------------------------------------------------------
   const form = document.getElementById("contact-form");
   const status = document.getElementById("form-status");
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-      const name = form.name.value.trim();
-      const email = form.email.value.trim();
-      const message = form.message.value.trim();
+
+      const formData = new FormData(form);
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const message = formData.get("message");
+
+      // Basic Validation
       if (!name || !email || !message) {
         status.textContent = "Please fill in name, email and message.";
         status.style.color = "crimson";
         return;
       }
 
-      // Fallback: open default mail client with prefilled content.
-      // For production use, replace with a POST to a server endpoint or Formspree integration.
-      const subject = encodeURIComponent("Service Request from " + name);
-      const body = encodeURIComponent(
-        "Name: " +
-          name +
-          "\nEmail: " +
-          email +
-          "\nPhone: " +
-          (form.phone.value || "") +
-          "\n\n" +
-          message
-      );
-      const mailto = `mailto:info@nssauto.example?subject=${subject}&body=${body}`;
-      // Try to open mail client
-      window.location.href = mailto;
-      status.textContent =
-        "Opening your mail client — if that does not work, copy the message and email us.";
-      status.style.color = "green";
+      // Change button state to indicate loading
+      const originalBtnText = submitBtn.textContent;
+      submitBtn.textContent = "Sending...";
+      submitBtn.disabled = true;
+      status.textContent = "";
+
+      // Send data to FormSubmit.co using AJAX (no redirect)
+      fetch("https://formsubmit.co/ajax/info@nssauto.lk", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          phone: formData.get("phone"), // Optional field
+          message: message,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success === "false") {
+            throw new Error("Service reported error");
+          }
+          // Success handling
+          status.textContent =
+            "Message sent successfully! We will contact you soon.";
+          status.style.color = "green";
+          form.reset(); // Clear form inputs
+        })
+        .catch((error) => {
+          // Error handling
+          console.error("Error:", error);
+          status.textContent =
+            "Something went wrong. Please try again or email us directly at info@nssauto.lk";
+          status.style.color = "crimson";
+        })
+        .finally(() => {
+          // Reset button state
+          submitBtn.textContent = originalBtnText;
+          submitBtn.disabled = false;
+        });
     });
   }
 });
