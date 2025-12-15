@@ -132,6 +132,35 @@ document.addEventListener("DOMContentLoaded", function () {
           submitBtn.disabled = false;
         });
     });
+
+    // -----------------------------------------------------------------
+    // 5. Mobile Menu Toggle
+    // -----------------------------------------------------------------
+    const menuToggle = document.querySelector(".mobile-menu-toggle");
+    const siteNav = document.querySelector(".site-nav");
+
+    if (menuToggle && siteNav) {
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        siteNav.classList.toggle("active");
+      });
+
+      // Close menu when a link is clicked
+      document.querySelectorAll(".site-nav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.classList.remove("active");
+          siteNav.classList.remove("active");
+        });
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!siteNav.contains(e.target) && !menuToggle.contains(e.target)) {
+          menuToggle.classList.remove("active");
+          siteNav.classList.remove("active");
+        }
+      });
+    }
   }
 
   // Fade-in on scroll observer
