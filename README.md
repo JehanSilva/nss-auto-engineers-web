@@ -3,7 +3,6 @@
 A professional, responsive single-page website designed for **NSS Auto Engineers**, an automobile repair and maintenance workshop based in Ja-Ela, Sri Lanka.
 
 ![Website Screenshot](./assets/screenshot.png)
-_(Note: Please add a screenshot of your website to the assets folder and name it screenshot.png)_
 
 ## 📖 Overview
 
