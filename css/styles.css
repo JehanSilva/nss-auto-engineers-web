@@ -471,6 +471,18 @@ h1.brand {
   cursor: pointer;
 }
 
+/* Email Link Styles */
+.link-email {
+  color: inherit; /* Uses the parent text color (black/dark gray) */
+  text-decoration: none; /* Removes the default underline */
+  transition: color 0.2s ease;
+}
+
+.link-email:hover {
+  color: #0056b3; /* Changes to Blue on hover */
+  text-decoration: underline; /* Optional: Adds underline on hover */
+}
+
 /* Floating navbar styles */
 .site-header {
   position: fixed;
