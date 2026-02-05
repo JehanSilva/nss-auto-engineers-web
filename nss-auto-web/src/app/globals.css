@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+  --foreground-rgb: 34, 34, 34;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+  --accent-color: #d32f2f; /* Your Red Color */
+}
+
+/* Custom Utilities */
+.text-accent {
+  color: var(--accent-color);
+}
+.bg-accent {
+  background-color: var(--accent-color);
+}
