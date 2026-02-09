@@ -25,7 +25,7 @@ export default function SparePartsSearch() {
         Search
       </label>
       <input
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-base outline-2 placeholder:text-gray-500"
         placeholder="Result: Part Number, Make, Model..."
         onChange={(e) => {
           handleSearch(e.target.value);
