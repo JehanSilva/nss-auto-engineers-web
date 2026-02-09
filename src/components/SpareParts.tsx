@@ -1,81 +1,48 @@
 import Image from "next/image";
+import Link from "next/link";
 
-const parts = [
-  {
-    title: "Brake Pads (Set)",
-    img: "cworks-break-pads.png",
-    desc: "Premium quality brake pads with excellent stopping power and durability.",
-    specs: ["Fitment: Most car models", "Material: Semi-metallic", "Warranty: 12 months"]
-  },
-  {
-    title: "Oil Filter",
-    img: "cworks-oilfilter.png",
-    desc: "High-efficiency oil filters that protect your engine by removing contaminants.",
-    specs: ["Fitment: Most car models", "Type: Spin-on cartridge", "Lifespan: 10,000 km"]
-  },
-  {
-    title: "Wiper Blades",
-    img: "cworks-wiperblades.png",
-    desc: "Durable wiper blades for clear visibility in rain with low streaking.",
-    specs: ["Sizes: 14\"–28\"", "Material: Silicone/Rubber", "Warranty: 6 months"]
-  },
-  {
-    title: "Spark Plugs",
-    img: "cworks-sparkplugs.png",
-    desc: "High-performance spark plugs for improved fuel efficiency and combustion.",
-    specs: ["Fitment: Petrol engines", "Type: Iridium/Copper", "Lifespan: 50,000 km"]
-  },
-  {
-    title: "Air Filter",
-    img: "cworks-airfilter.png",
-    desc: "Premium air filters that improve engine performance by ensuring clean air intake.",
-    specs: ["Fitment: Most car models", "Type: Panel/Pleated", "Lifespan: 15,000 km"]
-  }
+const brands = [
+  { name: "Toyota", logo: "https://res.cloudinary.com/dklcexfun/image/upload/v1770631946/toyota_amcrvz.png" },
+  { name: "Honda", logo: "https://res.cloudinary.com/dklcexfun/image/upload/v1770631945/honda_aasage.png" },
+  { name: "Cworks", logo: "https://res.cloudinary.com/dklcexfun/image/upload/v1770631946/cworks_zf3s3a.png" },
+  { name: "Wurth", logo: "https://res.cloudinary.com/dklcexfun/image/upload/v1770631945/wurth_drxfud.png" },
+  { name: "Berner", logo: "https://res.cloudinary.com/dklcexfun/image/upload/v1770631944/berner_j9qwwl.png" },
+  { name: "Mak", logo: "https://res.cloudinary.com/dklcexfun/image/upload/v1770631945/mak_gbvjnw.png" },
+  { name: "Motul", logo: "https://res.cloudinary.com/dklcexfun/image/upload/v1770631945/motul_hkxsj3.png" },
+  { name: "Suzuki", logo: "https://res.cloudinary.com/dklcexfun/image/upload/v1770631946/susuki_iiktfw.png" }
 ];
 
 export default function SpareParts() {
   return (
-    <section id="spareparts" className="py-12 bg-white">
-      <div className="max-w-[1100px] mx-auto px-4">
-        <h3 className="text-2xl font-bold mb-2 text-gray-900">Spare Parts</h3>
-        <p className="text-gray-600 mb-8">
-          Common spare parts we stock. Contact us for specific brand availability.
+    <section id="spareparts" className="py-16 bg-white">
+      <div className="max-w-[1100px] mx-auto px-4 text-center">
+        <h3 className="text-3xl font-bold mb-4 text-gray-900">Spare Parts</h3>
+        <p className="text-gray-600 mb-10 max-w-2xl mx-auto">
+          We supply high-quality genuine and OEM spare parts for leading vehicle manufacturers.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {parts.map((part, idx) => (
-            <div key={idx} className="bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col">
-              <div className="relative h-48 w-full bg-gray-50">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-12">
+          {brands.map((brand, idx) => (
+            <div key={idx} className="bg-gray-50 rounded-lg p-6 flex items-center justify-center border border-gray-100 shadow-sm hover:shadow-md transition-all hover:bg-gray-100 h-24">
+              <div className="relative w-full h-full">
                 <Image
-                  src={`/assets/${part.img}`}
-                  alt={part.title}
+                  src={brand.logo}
+                  alt={`${brand.name} logo`}
                   fill
-                  className="object-contain p-4"
+                  className="object-contain filter transition-all duration-300"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 />
-              </div>
-              
-              <div className="p-5 flex flex-col flex-grow">
-                <h4 className="font-bold text-lg mb-2 text-gray-800">{part.title}</h4>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{part.desc}</p>
-                
-                <div className="space-y-1 mb-6 flex-grow">
-                  {part.specs.map((spec, i) => (
-                    <p key={i} className="text-xs font-medium text-gray-500 bg-gray-50 px-2 py-1 rounded w-fit">
-                      {spec}
-                    </p>
-                  ))}
-                </div>
-
-                <a 
-                  href="#contact" 
-                  className="block w-full text-center py-2 border border-accent text-accent rounded hover:bg-accent hover:text-white transition-colors text-sm font-semibold"
-                >
-                  Request Quote
-                </a>
               </div>
             </div>
           ))}
         </div>
+
+        <Link 
+          href="/spare-parts" 
+          className="inline-block px-8 py-3 bg-accent text-white rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transition-transform hover:-translate-y-1"
+        >
+          View All Spare Parts
+        </Link>
       </div>
     </section>
   );

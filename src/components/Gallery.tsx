@@ -4,12 +4,12 @@ import Image from "next/image";
 import { X } from "lucide-react"; // npm install lucide-react
 
 const galleryImages = [
-  "cars-in-lineup.png",
-  "car-repairing.png",
-  "team.PNG",
-  "vantage-car.png",
-  "gallery-sample4.JPG", // Make sure these file names match your assets folder exactly
-  "gallery-sample5.JPG"
+  "https://res.cloudinary.com/dklcexfun/image/upload/v1770638261/cars-in-lineup_t1hs1g.png",
+  "https://res.cloudinary.com/dklcexfun/image/upload/v1770638247/car-repairing_xhfaya.png",
+  "https://res.cloudinary.com/dklcexfun/image/upload/v1770638261/team_u5qzou.png",
+  "https://res.cloudinary.com/dklcexfun/image/upload/v1770638248/vantage-car_hravgs.png",
+  "https://res.cloudinary.com/dklcexfun/image/upload/v1770638271/gallery-sample4_opkvzq.jpg", // Make sure these file names match your assets folder exactly
+  "https://res.cloudinary.com/dklcexfun/image/upload/v1770638260/gallery-sample5_cvwzi5.jpg"
 ];
 
 export default function Gallery() {
@@ -27,10 +27,10 @@ export default function Gallery() {
             <div 
               key={idx} 
               className="relative h-48 w-full cursor-pointer overflow-hidden rounded-lg group"
-              onClick={() => setSelectedImage(`/assets/${img}`)}
+              onClick={() => setSelectedImage(`${img}`)}
             >
               <Image
-                src={`/assets/${img}`}
+                src={`${img}`}
                 alt={`Gallery image ${idx + 1}`}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-110"

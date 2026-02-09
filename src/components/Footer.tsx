@@ -28,11 +28,11 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-6 border-b-2 border-red-100 inline-block pb-1">Quick Links</h3>
             <ul className="space-y-3">
-              <li><Link href="#home" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Home</Link></li>
-              <li><Link href="#about" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> About Us</Link></li>
-              <li><Link href="#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Services</Link></li>
-              <li><Link href="#gallery" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Gallery</Link></li>
-              <li><Link href="#contact" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Contact</Link></li>
+              <li><Link href="/" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Home</Link></li>
+              <li><Link href="/#about" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> About Us</Link></li>
+              <li><Link href="/#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Services</Link></li>
+              <li><Link href="/#gallery" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Gallery</Link></li>
+              <li><Link href="/#contact" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Contact</Link></li>
             </ul>
           </div>
 
@@ -40,11 +40,11 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-bold text-gray-900 mb-6 border-b-2 border-red-100 inline-block pb-1">Our Services</h3>
             <ul className="space-y-3">
-              <li><Link href="#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Engine Repair</Link></li>
-              <li><Link href="#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Hybrid Battery Service</Link></li>
-              <li><Link href="#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Computer Scanning</Link></li>
-              <li><Link href="#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Spare Parts</Link></li>
-              <li><Link href="#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Suspension Repair</Link></li>
+              <li><Link href="/#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Engine Repair</Link></li>
+              <li><Link href="/#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Hybrid Battery Service</Link></li>
+              <li><Link href="/#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Computer Scanning</Link></li>
+              <li><Link href="/spare-parts" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Spare Parts</Link></li>
+              <li><Link href="/#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Suspension Repair</Link></li>
             </ul>
           </div>
 

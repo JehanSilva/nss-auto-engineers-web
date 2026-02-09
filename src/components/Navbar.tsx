@@ -16,11 +16,11 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: "Services", href: "#services" },
-    { name: "Gallery", href: "#gallery" },
-    { name: "Spare Parts", href: "#spareparts" },
-    { name: "Map", href: "#map" },
-    { name: "Contact", href: "#contact" },
+    { name: "Services", href: "/#services" },
+    { name: "Gallery", href: "/#gallery" },
+    { name: "Spare Parts", href: "/#spareparts" },
+    { name: "Map", href: "/#map" },
+    { name: "Contact", href: "/#contact" },
   ];
 
   return (
@@ -32,7 +32,7 @@ export default function Navbar() {
       <div className="max-w-[1100px] mx-auto px-4 flex items-center justify-between">
         
         {/* Logo Section */}
-        <div className="flex flex-col items-center justify-center leading-none">
+        <Link href="/" className="flex flex-col items-center justify-center leading-none hover:opacity-80 transition-opacity">
           <Image
             src="/assets/logo.png"
             alt="NSS Auto Logo"
@@ -43,7 +43,7 @@ export default function Navbar() {
           <h1 className="text-[10px] md:text-xs font-bold text-accent uppercase tracking-wide text-center">
             NSS Auto Engineers
           </h1>
-        </div>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex gap-6">
