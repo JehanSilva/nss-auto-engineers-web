@@ -7,7 +7,7 @@ export default function Hero() {
       {/* Banner Image */}
       <div className="w-full mb-6">
         <Image
-          src="/assets/sponser-banner-2.png"
+          src="https://res.cloudinary.com/dklcexfun/image/upload/v1770638248/sponser-banner-2_jckbpp.png"
           alt="NSS Banner"
           width={1200}
           height={400}
