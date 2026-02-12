@@ -4,6 +4,20 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import SparePartsSearch from "@/components/SparePartsSearch";
 import SparePartCard from "@/components/SparePartCard";
 import { fetchSpareParts } from "@/services/spareParts";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Genuine Auto Spare Parts | NSS Auto Engineers",
+  description: "Find high-quality genuine and OEM spare parts for Toyota, Honda, Suzuki, and more. Browse our catalog of auto parts in Ja-Ela, Sri Lanka.",
+  openGraph: {
+    title: "Genuine Auto Spare Parts | NSS Auto Engineers",
+    description: "Find high-quality genuine and OEM spare parts for Toyota, Honda, Suzuki, and more. Browse our catalog of auto parts in Ja-Ela, Sri Lanka.",
+    url: 'https://www.nssauto.lk/spare-parts',
+    siteName: 'NSS Auto Engineers',
+    locale: 'en_US',
+    type: 'website',
+  },
+};
 
 export default async function SparePartsPage({
   searchParams,
