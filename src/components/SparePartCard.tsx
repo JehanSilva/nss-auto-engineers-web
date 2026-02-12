@@ -5,12 +5,17 @@ export default function SparePartCard({ part }: { part: SparePart }) {
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col group h-full">
       <div className="relative h-56 w-full bg-gray-50 p-6 group-hover:bg-gray-100 transition-colors">
+        {part.stock_quantity < 1 && (
+          <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow-md z-10">
+            Out of Stock
+          </div>
+        )}
         {part.image ? (
           <Image
             src={part.image}
             alt={part.name || part.part_number}
             fill
-            className="object-contain"
+            className={`object-contain ${part.stock_quantity < 1 ? 'opacity-60 grayscale' : ''}`}
           />
         ) : (
           <div className="flex items-center justify-center h-full text-gray-400">
@@ -44,12 +49,18 @@ export default function SparePartCard({ part }: { part: SparePart }) {
           )}
         </div>
 
-        <a 
-          href="/#contact" 
-          className="block w-full text-center py-3 border border-accent text-accent rounded-lg hover:bg-accent hover:text-white transition-colors font-semibold mt-auto"
-        >
-          Request Quote
-        </a>
+        {part.stock_quantity < 1 ? (
+          <div className="block w-full text-center py-3 bg-gray-100 text-gray-400 rounded-lg font-semibold mt-auto cursor-not-allowed">
+            Out of Stock
+          </div>
+        ) : (
+          <a 
+            href="/#contact" 
+            className="block w-full text-center py-3 border border-accent text-accent rounded-lg hover:bg-accent hover:text-white transition-colors font-semibold mt-auto"
+          >
+            Request Quote
+          </a>
+        )}
       </div>
     </div>
   );

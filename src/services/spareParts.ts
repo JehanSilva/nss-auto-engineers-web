@@ -11,16 +11,14 @@ export interface SparePart {
   image: string;
   compatible_vehicles: Vehicle[];
   name: string;
+  stock_quantity: number;
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
-export async function fetchSpareParts(search?: string): Promise<SparePart[]> {
+export async function fetchSpareParts(): Promise<SparePart[]> {
   const url = new URL('/api/parts/minimal/', API_BASE_URL);
-  if (search) {
-    url.searchParams.append('search', search);
-  }
-
+  
   try {
     const res = await fetch(url.toString(), {
       next: { revalidate: 60 }, // Revalidate every 60 seconds

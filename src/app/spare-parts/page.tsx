@@ -8,11 +8,62 @@ import { fetchSpareParts } from "@/services/spareParts";
 export default async function SparePartsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ search?: string }>;
+  searchParams: Promise<{ 
+    search?: string; 
+    brand?: string; 
+    part_number?: string; 
+    vehicle?: string;
+  }>;
 }) {
   const resolvedSearchParams = await searchParams;
   const search = resolvedSearchParams?.search || "";
-  const parts = await fetchSpareParts(search);
+  const brand = resolvedSearchParams?.brand || "";
+  const partNumber = resolvedSearchParams?.part_number || "";
+  const vehicle = resolvedSearchParams?.vehicle || "";
+  
+  const allParts = await fetchSpareParts();
+
+  // Frontend Filtering Logic
+  const parts = allParts.filter(part => {
+    // Brand Filter
+    if (brand && brand !== 'all') {
+      const brandLower = brand.toLowerCase();
+      // Check if the part name contains the brand OR if it's compatible with that brand's vehicles
+      const matchesBrandName = part.name.toLowerCase().includes(brandLower);
+      const matchesVehicleMake = part.compatible_vehicles?.some(v => v.make.toLowerCase() === brandLower);
+      
+      if (!matchesBrandName && !matchesVehicleMake) return false;
+    }
+
+    // Vehicle Filter
+    if (vehicle) {
+      const vehicleLower = vehicle.toLowerCase();
+      const matchesVehicle = part.compatible_vehicles?.some(v => 
+        v.model.toLowerCase().includes(vehicleLower) || 
+        `${v.make} ${v.model}`.toLowerCase().includes(vehicleLower)
+      );
+      if (!matchesVehicle) return false;
+    }
+
+    // Part Number Filter
+    if (partNumber) {
+       if (!part.part_number.toLowerCase().includes(partNumber.toLowerCase())) return false;
+    }
+
+    // General Search
+    if (search) {
+      const searchLower = search.toLowerCase();
+      const matchesName = part.name.toLowerCase().includes(searchLower);
+      const matchesPartNum = part.part_number.toLowerCase().includes(searchLower);
+      const matchesVehicle = part.compatible_vehicles?.some(v => 
+        `${v.make} ${v.model} ${v.year}`.toLowerCase().includes(searchLower)
+      );
+      
+      if (!matchesName && !matchesPartNum && !matchesVehicle) return false;
+    }
+
+    return true;
+  });
 
   return (
     <main className="min-h-screen bg-gray-50">
