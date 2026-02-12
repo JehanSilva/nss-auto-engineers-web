@@ -51,7 +51,47 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={inter.className} suppressHydrationWarning={true}>{children}</body>
+      <body className={inter.className} suppressHydrationWarning={true}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "AutoRepair",
+              "name": "NSS Auto Engineers",
+              "image": "https://www.nssauto.lk/assets/sponser-banner-2.png",
+              "url": "https://www.nssauto.lk",
+              "telephone": "+94777123456", // Placeholder, user might want to update
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "NSS Auto Engineers",
+                "addressLocality": "Ja-Ela",
+                "addressCountry": "LK"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 7.0784, 
+                "longitude": 79.8913 
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday"
+                ],
+                "opens": "08:30",
+                "closes": "17:30"
+              },
+              "priceRange": "$$"
+            })
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
