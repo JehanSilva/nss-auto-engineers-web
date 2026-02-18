@@ -1,7 +1,12 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import { SparePart } from '@/services/spareParts';
 
 export default function SparePartCard({ part }: { part: SparePart }) {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col group h-full">
       <div className="relative h-56 w-full bg-gray-50 p-6 group-hover:bg-gray-100 transition-colors">
@@ -10,12 +15,21 @@ export default function SparePartCard({ part }: { part: SparePart }) {
             Out of Stock
           </div>
         )}
+        
+        {/* Loading Skeleton */}
+        {isLoading && part.image && (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse z-0" />
+        )}
+
         {part.image ? (
           <Image
             src={part.image}
             alt={part.name || part.part_number}
             fill
-            className={`object-contain ${part.stock_quantity < 1 ? 'opacity-60 grayscale' : ''}`}
+            className={`object-contain transition-all duration-500 ${
+              isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+            } ${part.stock_quantity < 1 ? 'grayscale' : ''}`}
+            onLoad={() => setIsLoading(false)}
           />
         ) : (
           <div className="flex items-center justify-center h-full text-gray-400">
@@ -49,17 +63,10 @@ export default function SparePartCard({ part }: { part: SparePart }) {
           )}
         </div>
 
-        {part.stock_quantity < 1 ? (
+        {part.stock_quantity < 1 && (
           <div className="block w-full text-center py-3 bg-gray-100 text-gray-400 rounded-lg font-semibold mt-auto cursor-not-allowed">
             Out of Stock
           </div>
-        ) : (
-          <a 
-            href="/#contact" 
-            className="block w-full text-center py-3 border border-accent text-accent rounded-lg hover:bg-accent hover:text-white transition-colors font-semibold mt-auto"
-          >
-            Request Quote
-          </a>
         )}
       </div>
     </div>

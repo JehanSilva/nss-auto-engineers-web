@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import SparePartsSearch from "@/components/SparePartsSearch";
 import SparePartCard from "@/components/SparePartCard";
+import SparePartsList from "@/components/SparePartsList";
 import { fetchSpareParts } from "@/services/spareParts";
 import type { Metadata } from "next";
 
@@ -94,18 +95,7 @@ export default async function SparePartsPage({
             <SparePartsSearch />
           </div>
 
-          {parts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {parts.map((part) => (
-                <SparePartCard key={part.id} part={part} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <p className="text-xl text-gray-500">No spare parts found matching your criteria.</p>
-              <a href="/spare-parts" className="text-accent hover:underline mt-2 inline-block">View all parts</a>
-            </div>
-          )}
+          <SparePartsList parts={parts} />
         </div>
       </section>
 
