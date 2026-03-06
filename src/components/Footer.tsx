@@ -80,8 +80,8 @@ export default function Footer() {
         <div className="max-w-[1100px] mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-sm opacity-90">
           <p>© {new Date().getFullYear()} NSS Auto Engineers. All rights reserved.</p>
           <div className="flex gap-6 mt-2 md:mt-0">
-            <Link href="#" className="hover:underline">Privacy Policy</Link>
-            <Link href="#" className="hover:underline">Terms of Service</Link>
+            <Link href="/privacy-policy" className="hover:underline">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="hover:underline">Terms of Service</Link>
           </div>
         </div>
       </div>

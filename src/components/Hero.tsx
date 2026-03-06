@@ -22,8 +22,8 @@ export default function Hero() {
             Premier Car Repair Shop in Ja-Ela | Auto Repair & Engine Tune-Ups
           </h1>
           <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-            Your trusted partner for all automobile car repair needs in Ja-Ela. Professional <br className="hidden md:block" />
-            service you can rely on for engine tune-ups, hybrids, and general maintenance.
+            Your trusted partner for all automobile car repair needs, engine tune-ups, hybrids, and general maintenance. <br className="hidden md:block" />
+            
           </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <Link
