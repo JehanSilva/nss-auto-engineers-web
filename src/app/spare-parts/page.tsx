@@ -8,13 +8,45 @@ import { fetchSpareParts } from "@/services/spareParts";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Genuine Auto Spare Parts | NSS Auto Engineers",
-  description: "Find high-quality genuine and OEM spare parts for Toyota, Honda, Suzuki, and more. Browse our catalog of auto parts in Ja-Ela, Sri Lanka.",
+  title: "Genuine Auto Spare Parts Ja-Ela | NSS Auto Engineers",
+  description: "Find high-quality genuine and OEM spare parts for Toyota, Honda, Suzuki, and more. Browse our catalog of auto parts in Ja-Ela, Sri Lanka. Best car repair shop in Ja-Ela.",
+  keywords: [
+    "Spare Parts Ja-Ela", 
+    "Auto Parts Ja-Ela", 
+    "Genuine Spare Parts Sri Lanka", 
+    "Car Parts in Ja-Ela", 
+    "NSS Auto Engineers", 
+    "Car Repair Shop in Ja-Ela",
+    "Spare parts shop near me",
+    "Auto parts store in Ja-ela",
+    "Best vehicle parts dealer",
+    "Genuine spare parts",
+    "High-quality aftermarket parts",
+    "Reconditioned auto parts",
+    "Auto parts delivery",
+    "Same-day spare parts shipping",
+    "Wholesale car parts",
+    "Toyota Hiace KDH spare parts",
+    "Maruti Suzuki Zen Estilo parts",
+    "KDH body parts and engine components",
+    "Cworks brake pads",
+    "Cworks oil filters",
+    "Denso spark plugs",
+    "Genuine Toyota parts",
+    "Replacement for squeaking brakes",
+    "Where to buy KDH air filters",
+    "Maruti Suzuki spare parts price list",
+    "Best brand for Japanese car oil filters",
+    "Auto parts wholesale Sri Lanka",
+    "Bulk spare parts for fleet maintenance",
+    "Distributor of Cworks parts",
+    "Garage supply spare parts"
+  ],
   openGraph: {
-    title: "Genuine Auto Spare Parts | NSS Auto Engineers",
+    title: "Genuine Auto Spare Parts Ja-Ela | NSS Auto Engineers",
     description: "Find high-quality genuine and OEM spare parts for Toyota, Honda, Suzuki, and more. Browse our catalog of auto parts in Ja-Ela, Sri Lanka.",
     url: 'https://www.nssauto.lk/spare-parts',
-    siteName: 'NSS Auto Engineers',
+    siteName: 'NSS Auto Engineers Ja-Ela',
     locale: 'en_US',
     type: 'website',
   },
@@ -87,10 +119,10 @@ export default async function SparePartsPage({
       <section className="py-20 bg-white">
         <div className="max-w-[1100px] mx-auto px-4">
           <div className="mb-12 text-center">
-            <h1 className="text-4xl font-bold mb-4 text-gray-900">Spare Parts</h1>
+            <h1 className="text-4xl font-bold mb-4 text-gray-900">Genuine Auto Spare Parts in Ja-Ela</h1>
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-              We stock a wide range of high-quality spare parts for various vehicle makes and models. 
-              Contact us for specific brand availability and pricing.
+              We stock a wide range of high-quality genuine and OEM spare parts for various vehicle makes and models in Ja-Ela. 
+              Contact us for specific brand availability and pricing for your automobile car repair needs.
             </p>
             <SparePartsSearch />
           </div>

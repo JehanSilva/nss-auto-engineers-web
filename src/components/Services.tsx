@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 const services = [
-  { title: "Engine Services", img: "https://res.cloudinary.com/dklcexfun/image/upload/v1770638241/engine-repair_sktvj2.png", desc: "Complete overhauling, tune-ups, and diagnostics." },
-  { title: "Hybrid & General", img: "https://res.cloudinary.com/dklcexfun/image/upload/v1770638258/hybrid_i2nmsc.png", desc: "Specialized repair for Hybrid, Gasoline, and Diesel vehicles." },
+  { title: "Engine Services", img: "https://res.cloudinary.com/dklcexfun/image/upload/v1770638241/engine-repair_sktvj2.png", desc: "Expert engine tune ups, complete overhauling, and automobile car repair diagnostics." },
+  { title: "Hybrid & General", img: "https://res.cloudinary.com/dklcexfun/image/upload/v1770638258/hybrid_i2nmsc.png", desc: "Specialized auto repair in Ja-Ela for Hybrid, Gasoline, and Diesel vehicles." },
   { title: "Scanning", img: "https://res.cloudinary.com/dklcexfun/image/upload/v1770638255/scanning_lfuoln.png", desc: "Advanced computer diagnostics and ECU programming." },
   { title: "Suspension", img: "https://res.cloudinary.com/dklcexfun/image/upload/v1770638242/suspension_j7cdmq.png", desc: "Shock absorbers, control arms, and full suspension restoration." },
   { title: "Radiator", img: "https://res.cloudinary.com/dklcexfun/image/upload/v1770638243/radiator_betlye.png", desc: "Radiator repair, flushing, and cooling system maintenance." },
