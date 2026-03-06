@@ -105,7 +105,17 @@ export const metadata: Metadata = {
     "Radiator replacement",
     "Car AC gas charging",
     "Car wash and detailing",
-    "Car diagnostic testing"
+    "Car diagnostic testing",
+    "Car garage Ja-Ela",
+    "Auto garage Sri Lanka",
+    "Best auto garage near me",
+    "Hybrid car garage",
+    "Engine repair garage",
+    "Mechanic garage in Ja-Ela",
+    "Vehicle repair garage",
+    "Local auto garage",
+    "Trusted car garage",
+    "Full service auto garage"
   ],
   authors: [{ name: "NSS Auto Engineers" }],
   creator: "NSS Auto Engineers",
