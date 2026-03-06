@@ -18,12 +18,12 @@ export default function Hero() {
 
       <div className="max-w-[1100px] mx-auto px-4 grid md:grid-cols-[1fr_380px] gap-8 items-center">
         <div className="hero-content">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-            Expert Auto Repair & Maintenance
-          </h2>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+            Premier Car Repair Shop in Ja-Ela | Auto Repair & Engine Tune-Ups
+          </h1>
           <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-            Your trusted partner for all automotive repair needs. Professional <br className="hidden md:block" />
-            service you can rely on.
+            Your trusted partner for all automobile car repair needs in Ja-Ela. Professional <br className="hidden md:block" />
+            service you can rely on for engine tune-ups, hybrids, and general maintenance.
           </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <Link
