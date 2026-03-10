@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Star, User } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { Star, User, Quote, ExternalLink } from "lucide-react";
 import { getGoogleReviews } from "@/app/actions";
 
 interface AuthorAttribution {
@@ -9,7 +9,7 @@ interface AuthorAttribution {
 }
 
 interface Review {
-  name?: string; // Retrieve via authorAttribution
+  name?: string;
   relativePublishTimeDescription: string;
   rating: number;
   text: { text: string };
@@ -40,23 +40,35 @@ const mockReviews = [
 export default function GoogleReviews() {
   const [reviews, setReviews] = useState<Review[]>(mockReviews);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     async function loadReviews() {
       try {
         const data = await getGoogleReviews();
         if (data && data.reviews && Array.isArray(data.reviews)) {
-            // Sort by rating (desc) or date if preferred, typically Google returns relevant ones.
-            // We can take top 3-6
-            setReviews(data.reviews.slice(0, 3));
-        } else {
-            console.log("Using mock data due to missing API data");
-            // Keep mock data if API fails or is not configured
+          setReviews(data.reviews.slice(0, 3));
         }
       } catch (err) {
         console.error("Failed to load reviews:", err);
-        setError(true);
       } finally {
         setIsLoading(false);
       }
@@ -65,63 +77,88 @@ export default function GoogleReviews() {
   }, []);
 
   return (
-    <section id="reviews" className="py-12 bg-gray-50">
-      <div className="max-w-[1100px] mx-auto px-4">
-        <div className="text-center mb-10">
-          <h3 className="text-2xl font-bold mb-2 text-gray-900">What Our Customers Say</h3>
-          <div className="flex items-center justify-center gap-2 text-yellow-500 mb-2">
+    <section ref={sectionRef} id="reviews" className="py-20 relative overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-background to-muted/20" />
+      
+      <div className="relative max-w-[1100px] mx-auto px-4">
+        {/* Section Header */}
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            What Our <span className="text-gradient">Customers Say</span>
+          </h2>
+          <div className="flex items-center justify-center gap-1 mb-3">
             {[1, 2, 3, 4, 5].map((star) => (
-              <Star key={star} size={24} fill="currentColor" />
+              <Star key={star} size={24} className="text-yellow-500 fill-yellow-500" />
             ))}
           </div>
-          <p className="text-gray-600">Based on Google Reviews</p>
+          <p className="text-muted-foreground">Based on Google Reviews</p>
         </div>
 
+        {/* Reviews Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {reviews.map((review, idx) => (
             <div
               key={idx}
-              className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+              className={`group relative bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all duration-500 hover-lift ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+              }`}
+              style={{ transitionDelay: `${idx * 150}ms` }}
             >
-              <div className="flex items-center gap-3 mb-4">
+              {/* Quote Icon */}
+              <div className="absolute -top-3 -left-3 w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+                <Quote size={18} className="text-primary-foreground" />
+              </div>
+
+              {/* Author Info */}
+              <div className="flex items-center gap-3 mb-4 pt-2">
                 {review.authorAttribution?.photoUri ? (
-                    <img 
-                        src={review.authorAttribution.photoUri} 
-                        alt={review.authorAttribution.displayName}
-                        className="w-10 h-10 rounded-full object-cover"
-                        referrerPolicy="no-referrer"
-                    />
+                  <img 
+                    src={review.authorAttribution.photoUri} 
+                    alt={review.authorAttribution.displayName}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-border"
+                    referrerPolicy="no-referrer"
+                  />
                 ) : (
-                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500">
-                        <User size={20} />
-                    </div>
+                  <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center border-2 border-border">
+                    <User size={24} className="text-muted-foreground" />
+                  </div>
                 )}
                 
                 <div>
-                  <h4 className="font-bold text-gray-900 text-sm">{review.authorAttribution?.displayName || "Google User"}</h4>
-                  <p className="text-xs text-gray-500">{review.relativePublishTimeDescription}</p>
+                  <h4 className="font-bold text-foreground">{review.authorAttribution?.displayName || "Google User"}</h4>
+                  <p className="text-xs text-muted-foreground">{review.relativePublishTimeDescription}</p>
                 </div>
               </div>
               
-              <div className="flex gap-0.5 mb-3 text-yellow-500">
+              {/* Rating Stars */}
+              <div className="flex gap-0.5 mb-4">
                 {[...Array(review.rating)].map((_, i) => (
-                  <Star key={i} size={14} fill="currentColor" />
+                  <Star key={i} size={16} className="text-yellow-500 fill-yellow-500" />
                 ))}
               </div>
 
-              <p className="text-gray-600 text-sm italic line-clamp-4">"{review.text?.text}"</p>
+              {/* Review Text */}
+              <p className="text-muted-foreground text-sm leading-relaxed line-clamp-4">
+                &ldquo;{review.text?.text}&rdquo;
+              </p>
+
+              {/* Hover Glow */}
+              <div className="absolute inset-0 rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             </div>
           ))}
         </div>
         
-        <div className="mt-8 text-center">
+        {/* CTA */}
+        <div className={`mt-12 text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "450ms" }}>
           <a
             href="https://www.google.com/search?q=NSS+Auto+Engineers+reviews"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-2 border border-blue-600 text-blue-600 font-medium rounded-full hover:bg-blue-50 transition-colors"
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-card border border-border rounded-xl text-foreground font-medium hover:border-primary/50 hover:text-primary transition-all"
           >
-            See all reviews on Google
+            <span>See all reviews on Google</span>
+            <ExternalLink size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </a>
         </div>
       </div>

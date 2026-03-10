@@ -113,14 +113,20 @@ export default async function SparePartsPage({
   });
 
   return (
-    <main className="min-h-screen bg-gray-50">
+    <main className="min-h-screen bg-background industrial-grid">
       <Navbar />
       
-      <section className="py-20 bg-white">
+      <section className="py-24 pt-32">
         <div className="max-w-[1100px] mx-auto px-4">
           <div className="mb-12 text-center">
-            <h1 className="text-4xl font-bold mb-4 text-gray-900">Genuine Auto Spare Parts in Ja-Ela</h1>
-            <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-4">
+              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+              <span className="text-sm font-medium text-primary">Quality Parts</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+              Genuine Auto <span className="text-gradient">Spare Parts</span>
+            </h1>
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
               We stock a wide range of high-quality genuine and OEM spare parts for various vehicle makes and models in Ja-Ela. 
               Contact us for specific brand availability and pricing for your automobile car repair needs.
             </p>

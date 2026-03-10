@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ 
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.nssauto.lk'),
@@ -155,7 +163,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-T3HCZ4CYGS" />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -168,7 +176,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={inter.className} suppressHydrationWarning={true}>
+      <body className={`${inter.className} antialiased`} suppressHydrationWarning={true}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -179,7 +187,7 @@ export default function RootLayout({
               "description": "Expert auto repair services in Ja-Ela & best mechanic near Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, A/C repair, and brake replacement. We are a reliable 24-hour emergency auto garage offering affordable same-day car repair and genuine spare parts for all vehicle makes.",
               "image": "https://www.nssauto.lk/assets/sponser-banner-2.png",
               "url": "https://www.nssauto.lk",
-              "telephone": "+94777123456", // Placeholder, user might want to update
+              "telephone": "+94777123456",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "NSS Auto Engineers",
