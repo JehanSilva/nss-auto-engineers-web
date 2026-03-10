@@ -1,68 +1,149 @@
 "use client";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Package, ArrowRight } from "lucide-react";
 import { brands } from "@/data/brands";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function SpareParts() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      gsap.from(headerRef.current, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 85%"
         }
-      },
-      { threshold: 0.1 }
-    );
+      });
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+      // Brand cards animation
+      const cards = gridRef.current?.children;
+      if (cards) {
+        gsap.set(cards, {
+          opacity: 0,
+          scale: 0.8,
+          y: 40
+        });
 
-    return () => observer.disconnect();
+        gsap.to(cards, {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: {
+            amount: 0.8,
+            grid: [2, 4],
+            from: "center"
+          },
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: gridRef.current,
+            start: "top 80%"
+          }
+        });
+
+        // Hover effects
+        Array.from(cards).forEach((card) => {
+          const el = card as HTMLElement;
+          const image = el.querySelector("img");
+          
+          el.addEventListener("mouseenter", () => {
+            gsap.to(el, {
+              y: -8,
+              scale: 1.05,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+            if (image) {
+              gsap.to(image, {
+                filter: "brightness(1.1)",
+                duration: 0.3
+              });
+            }
+          });
+          
+          el.addEventListener("mouseleave", () => {
+            gsap.to(el, {
+              y: 0,
+              scale: 1,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+            if (image) {
+              gsap.to(image, {
+                filter: "brightness(0.75)",
+                duration: 0.3
+              });
+            }
+          });
+        });
+      }
+
+      // CTA animation
+      gsap.from(ctaRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ctaRef.current,
+          start: "top 90%"
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} id="spareparts" className="py-20 relative overflow-hidden">
+    <section ref={sectionRef} id="spareparts" className="py-24 relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute top-1/2 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
-      <div className="absolute top-1/2 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2" />
+      <div className="absolute top-1/2 left-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2" />
+      <div className="absolute top-1/2 right-0 w-64 h-64 bg-secondary/5 rounded-full blur-[100px] -translate-y-1/2" />
       
       <div className="relative max-w-[1100px] mx-auto px-4">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div ref={headerRef} className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-4">
             <Package size={16} className="text-primary" />
             <span className="text-sm font-medium text-primary">Genuine Parts</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
             Quality <span className="text-gradient">Spare Parts</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             We supply high-quality genuine and OEM spare parts for leading vehicle manufacturers
           </p>
         </div>
 
         {/* Brands Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-12">
+        <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-12">
           {brands.map((brand, idx) => (
             <div 
               key={idx} 
-              className={`group bg-card border border-border rounded-xl p-6 flex items-center justify-center h-24 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 hover-lift ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: `${idx * 50}ms` }}
+              className="group bg-card border border-border rounded-xl p-6 flex items-center justify-center h-24 hover:border-primary/50 transition-colors duration-300 cursor-pointer"
             >
               <div className="relative w-full h-full">
                 <Image
                   src={brand.logo}
                   alt={`${brand.name} logo`}
                   fill
-                  className="object-contain filter brightness-75 group-hover:brightness-100 transition-all duration-300"
+                  className="object-contain filter brightness-75 transition-all duration-300"
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 />
               </div>
@@ -71,7 +152,7 @@ export default function SpareParts() {
         </div>
 
         {/* CTA */}
-        <div className={`text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "400ms" }}>
+        <div ref={ctaRef} className="text-center">
           <Link 
             href="/spare-parts" 
             className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-xl font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-1 transition-all duration-300"

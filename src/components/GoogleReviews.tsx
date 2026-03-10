@@ -2,6 +2,10 @@
 import { useEffect, useState, useRef } from "react";
 import { Star, User, Quote, ExternalLink } from "lucide-react";
 import { getGoogleReviews } from "@/app/actions";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface AuthorAttribution {
   displayName: string;
@@ -40,25 +44,124 @@ const mockReviews = [
 export default function GoogleReviews() {
   const [reviews, setReviews] = useState<Review[]>(mockReviews);
   const [isLoading, setIsLoading] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      // Header animation
+      gsap.from(headerRef.current, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 85%"
         }
-      },
-      { threshold: 0.1 }
-    );
+      });
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+      // Stars rating animation
+      const stars = headerRef.current?.querySelectorAll(".star-icon");
+      if (stars) {
+        gsap.from(stars, {
+          scale: 0,
+          rotation: -180,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 85%"
+          }
+        });
+      }
 
-    return () => observer.disconnect();
-  }, []);
+      // Cards animation with 3D flip
+      const cards = cardsRef.current?.children;
+      if (cards) {
+        gsap.set(cards, {
+          opacity: 0,
+          rotateY: -45,
+          y: 60,
+          transformPerspective: 1000,
+          transformOrigin: "center center"
+        });
+
+        gsap.to(cards, {
+          opacity: 1,
+          rotateY: 0,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: cardsRef.current,
+            start: "top 80%"
+          }
+        });
+
+        // Hover effects
+        Array.from(cards).forEach((card) => {
+          const el = card as HTMLElement;
+          const quoteIcon = el.querySelector(".quote-icon");
+          
+          el.addEventListener("mouseenter", () => {
+            gsap.to(el, {
+              y: -10,
+              scale: 1.02,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+            if (quoteIcon) {
+              gsap.to(quoteIcon, {
+                scale: 1.2,
+                rotation: 15,
+                duration: 0.3,
+                ease: "back.out(1.7)"
+              });
+            }
+          });
+          
+          el.addEventListener("mouseleave", () => {
+            gsap.to(el, {
+              y: 0,
+              scale: 1,
+              duration: 0.3,
+              ease: "power2.out"
+            });
+            if (quoteIcon) {
+              gsap.to(quoteIcon, {
+                scale: 1,
+                rotation: 0,
+                duration: 0.3,
+                ease: "power2.out"
+              });
+            }
+          });
+        });
+      }
+
+      // CTA animation
+      gsap.from(ctaRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ctaRef.current,
+          start: "top 90%"
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reviews]);
 
   useEffect(() => {
     async function loadReviews() {
@@ -77,36 +180,35 @@ export default function GoogleReviews() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="reviews" className="py-20 relative overflow-hidden">
+    <section ref={sectionRef} id="reviews" className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-muted/20 via-background to-muted/20" />
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -translate-y-1/2" />
       
       <div className="relative max-w-[1100px] mx-auto px-4">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+        <div ref={headerRef} className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
             What Our <span className="text-gradient">Customers Say</span>
           </h2>
           <div className="flex items-center justify-center gap-1 mb-3">
             {[1, 2, 3, 4, 5].map((star) => (
-              <Star key={star} size={24} className="text-yellow-500 fill-yellow-500" />
+              <Star key={star} size={24} className="star-icon text-yellow-500 fill-yellow-500" />
             ))}
           </div>
-          <p className="text-muted-foreground">Based on Google Reviews</p>
+          <p className="text-muted-foreground text-lg">Based on Google Reviews</p>
         </div>
 
         {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6" style={{ perspective: "1000px" }}>
           {reviews.map((review, idx) => (
             <div
               key={idx}
-              className={`group relative bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-all duration-500 hover-lift ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: `${idx * 150}ms` }}
+              className="group relative bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-colors duration-300 cursor-pointer"
+              style={{ transformStyle: "preserve-3d" }}
             >
               {/* Quote Icon */}
-              <div className="absolute -top-3 -left-3 w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+              <div className="quote-icon absolute -top-3 -left-3 w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg">
                 <Quote size={18} className="text-primary-foreground" />
               </div>
 
@@ -150,12 +252,12 @@ export default function GoogleReviews() {
         </div>
         
         {/* CTA */}
-        <div className={`mt-12 text-center transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: "450ms" }}>
+        <div ref={ctaRef} className="mt-12 text-center">
           <a
             href="https://www.google.com/search?q=NSS+Auto+Engineers+reviews"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 px-6 py-3 bg-card border border-border rounded-xl text-foreground font-medium hover:border-primary/50 hover:text-primary transition-all"
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-card border border-border rounded-xl text-foreground font-medium hover:border-primary/50 hover:text-primary transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10"
           >
             <span>See all reviews on Google</span>
             <ExternalLink size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />

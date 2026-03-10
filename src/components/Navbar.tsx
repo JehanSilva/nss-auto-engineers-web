@@ -1,12 +1,17 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Wrench } from "lucide-react";
+import gsap from "gsap";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const linksRef = useRef<HTMLElement>(null);
+  const buttonRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +19,41 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    // Initial animation
+    const ctx = gsap.context(() => {
+      gsap.from(logoRef.current, {
+        x: -30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: 0.2
+      });
+
+      if (linksRef.current) {
+        const links = linksRef.current.children;
+        gsap.from(links, {
+          y: -20,
+          opacity: 0,
+          duration: 0.5,
+          stagger: 0.1,
+          ease: "power3.out",
+          delay: 0.4
+        });
+      }
+
+      gsap.from(buttonRef.current, {
+        x: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: 0.6
+      });
+    }, navRef);
+
+    return () => ctx.revert();
   }, []);
 
   const navLinks = [
@@ -24,8 +64,25 @@ export default function Navbar() {
     { name: "Contact", href: "/#contact" },
   ];
 
+  const handleLinkHover = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    gsap.to(e.currentTarget, {
+      scale: 1.05,
+      duration: 0.2,
+      ease: "power2.out"
+    });
+  };
+
+  const handleLinkLeave = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    gsap.to(e.currentTarget, {
+      scale: 1,
+      duration: 0.2,
+      ease: "power2.out"
+    });
+  };
+
   return (
     <header
+      ref={navRef}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled 
           ? "glass border-b border-border/50 py-2" 
@@ -35,7 +92,7 @@ export default function Navbar() {
       <div className="max-w-[1100px] mx-auto px-4 flex items-center justify-between">
         
         {/* Logo Section */}
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link ref={logoRef} href="/" className="flex items-center gap-3 group">
           <div className="relative">
             <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:bg-primary/40 transition-all duration-300" />
             <Image
@@ -43,7 +100,7 @@ export default function Navbar() {
               alt="NSS Auto Logo"
               width={44}
               height={44}
-              className="relative object-contain drop-shadow-lg"
+              className="relative object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-300"
             />
           </div>
           <div className="flex flex-col">
@@ -57,13 +114,14 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map((link, idx) => (
+        <nav ref={linksRef} className="hidden md:flex items-center gap-1">
+          {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
+              onMouseEnter={handleLinkHover}
+              onMouseLeave={handleLinkLeave}
               className="relative px-4 py-2 font-medium text-muted-foreground hover:text-foreground transition-colors group"
-              style={{ animationDelay: `${idx * 50}ms` }}
             >
               <span className="relative z-10">{link.name}</span>
               <span className="absolute inset-0 bg-primary/10 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300" />
@@ -71,8 +129,9 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
+            ref={buttonRef}
             href="#contact"
-            className="ml-4 px-5 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 flex items-center gap-2"
+            className="ml-4 px-5 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 flex items-center gap-2 hover:scale-105"
           >
             <Wrench size={16} />
             Book Now
