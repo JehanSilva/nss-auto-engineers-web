@@ -63,9 +63,22 @@ export default function SparePartCard({ part }: { part: SparePart }) {
           )}
         </div>
 
+        {part.stock_quantity === 1 && (
+          <div className="mt-auto">
+            <div className="block w-full text-center py-3 bg-amber-50 text-amber-700 rounded-lg font-bold border border-amber-100 animate-pulse">
+              Only one item available
+            </div>
+          </div>
+        )}
+
         {part.stock_quantity < 1 && (
-          <div className="block w-full text-center py-3 bg-gray-100 text-gray-400 rounded-lg font-semibold mt-auto cursor-not-allowed">
-            Out of Stock
+          <div className="mt-auto space-y-2">
+            <div className="block w-full text-center py-3 bg-red-50 text-red-600 rounded-lg font-bold border border-red-100">
+              Out of Stock
+            </div>
+            <p className="text-[11px] text-gray-500 text-center font-medium">
+              Please contact us to check for the availability
+            </p>
           </div>
         )}
       </div>
