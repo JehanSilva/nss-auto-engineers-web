@@ -56,6 +56,7 @@ export default async function SparePartsPage({
   searchParams,
 }: {
   searchParams: Promise<{ 
+    q?: string;
     search?: string; 
     brand?: string; 
     part_number?: string; 
@@ -63,26 +64,40 @@ export default async function SparePartsPage({
   }>;
 }) {
   const resolvedSearchParams = await searchParams;
-  const search = resolvedSearchParams?.search || "";
+  // Support both 'q' (new) and old parameters if they exist
+  const q = resolvedSearchParams?.q || resolvedSearchParams?.search || "";
   const brand = resolvedSearchParams?.brand || "";
   const partNumber = resolvedSearchParams?.part_number || "";
   const vehicle = resolvedSearchParams?.vehicle || "";
   
   const allParts = await fetchSpareParts();
 
-  // Frontend Filtering Logic
+  // Enhanced Frontend Filtering Logic
   const parts = allParts.filter(part => {
-    // Brand Filter
+    // If we have the new single query parameter
+    if (q) {
+      const keywords = q.toLowerCase().split(/\s+/).filter(k => k.length > 0);
+      
+      // Every keyword must match at least one field
+      return keywords.every(keyword => {
+        const matchesName = part.name.toLowerCase().includes(keyword);
+        const matchesPartNum = part.part_number.toLowerCase().includes(keyword);
+        const matchesVehicle = part.compatible_vehicles?.some(v => 
+          `${v.make} ${v.model} ${v.year}`.toLowerCase().includes(keyword)
+        );
+        
+        return matchesName || matchesPartNum || matchesVehicle;
+      });
+    }
+
+    // Fallback for legacy specific parameters if they are still in URL
     if (brand && brand !== 'all') {
       const brandLower = brand.toLowerCase();
-      // Check if the part name contains the brand OR if it's compatible with that brand's vehicles
       const matchesBrandName = part.name.toLowerCase().includes(brandLower);
       const matchesVehicleMake = part.compatible_vehicles?.some(v => v.make.toLowerCase() === brandLower);
-      
       if (!matchesBrandName && !matchesVehicleMake) return false;
     }
 
-    // Vehicle Filter
     if (vehicle) {
       const vehicleLower = vehicle.toLowerCase();
       const matchesVehicle = part.compatible_vehicles?.some(v => 
@@ -92,21 +107,8 @@ export default async function SparePartsPage({
       if (!matchesVehicle) return false;
     }
 
-    // Part Number Filter
     if (partNumber) {
        if (!part.part_number.toLowerCase().includes(partNumber.toLowerCase())) return false;
-    }
-
-    // General Search
-    if (search) {
-      const searchLower = search.toLowerCase();
-      const matchesName = part.name.toLowerCase().includes(searchLower);
-      const matchesPartNum = part.part_number.toLowerCase().includes(searchLower);
-      const matchesVehicle = part.compatible_vehicles?.some(v => 
-        `${v.make} ${v.model} ${v.year}`.toLowerCase().includes(searchLower)
-      );
-      
-      if (!matchesName && !matchesPartNum && !matchesVehicle) return false;
     }
 
     return true;

@@ -31,11 +31,30 @@ export async function fetchSpareParts(): Promise<SparePart[]> {
 
     const data: SparePart[] = await res.json();
     
-    // Prepend base URL to image paths if they are relative
-    return data.map(part => ({
-      ...part,
-      image: part.image.startsWith('http') ? part.image : `${API_BASE_URL}${part.image}`
-    }));
+    if (!Array.isArray(data)) {
+        console.error('Expected an array of spare parts, but received:', data);
+        return [];
+    }
+    
+    // Prepend base URL to image paths if they are relative and handle nulls
+    return data.map(part => {
+      // Handle potential field name variations and ensure it's a number
+      const stock = typeof (part as any).stock_qty !== 'undefined' 
+        ? (part as any).stock_qty 
+        : part.stock_quantity;
+        
+      return {
+        ...part,
+        name: part.name || 'Unnamed Part',
+        part_number: part.part_number || 'N/A',
+        stock_quantity: Number(stock) || 0,
+        image: part.image && part.image.startsWith('http') 
+          ? part.image 
+          : part.image 
+            ? `${API_BASE_URL}${part.image}` 
+            : part.image
+      };
+    });
 
   } catch (error) {
     console.error('Error fetching spare parts:', error);
