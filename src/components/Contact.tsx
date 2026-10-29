@@ -1,124 +1,88 @@
-"use client";
-import { useState, FormEvent } from "react";
-import { Phone, MapPin, Clock, CheckCircle, Send } from "lucide-react";
+import Image from "next/image";
+import { Phone, Mail, MapPin, Clock, ArrowRight, Lightbulb, Briefcase } from "lucide-react";
+
+const PHONE_DISPLAY = "+94 71 618 8187";
+const PHONE_TEL = "tel:+94716188187";
+const WHATSAPP_URL = "https://wa.me/94716188187";
+const EMAIL = "info@nssauto.lk";
+
+const suggestionUrl = `${WHATSAPP_URL}?text=${encodeURIComponent(
+  "Hi NSS Auto Engineers, I have a suggestion: "
+)}`;
+
+const applyUrl = `mailto:${EMAIL}?subject=${encodeURIComponent(
+  "Job Application - NSS Auto Engineers"
+)}&body=${encodeURIComponent(
+  "Hi NSS Auto Engineers,\n\nI would like to apply for the position of: \n\nName: \nPhone: \n\nI have attached my CV and copies of my qualifications.\n\nThank you."
+)}`;
+
+const applySteps = [
+  "Attach your CV",
+  "Include copies of your qualifications or certificates",
+  "Mention the position you're interested in and your phone number",
+];
 
 export default function Contact() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/info@nssauto.lk", {
-        method: "POST",
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if (response.ok) {
-        setIsSuccess(true);
-      } else {
-        alert("Something went wrong. Please try again later.");
-      }
-    } catch (error) {
-      alert("Something went wrong. Please check your internet connection.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <section id="contact" className="py-12 bg-white">
       <div className="max-w-[1100px] mx-auto px-4">
         <h3 className="text-2xl font-bold mb-2">Contact Us</h3>
-        <p className="text-gray-600 mb-8">Call, email or send us a message below.</p>
+        <p className="text-gray-600 mb-8">The fastest way to reach us is a call or a WhatsApp message.</p>
 
-        <div className="grid md:grid-cols-[1fr_320px] gap-8">
-          {/* Form Area */}
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-full">
-            {isSuccess ? (
-              <div className="flex flex-col items-center justify-center h-full text-center py-10 space-y-4">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-2">
-                  <CheckCircle className="w-8 h-8 text-green-600" />
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Get in touch */}
+          <div className="bg-gray-50 p-6 md:p-8 rounded-lg shadow-sm border border-gray-100">
+            <h4 className="font-bold text-xl text-gray-900 mb-2">Get in Touch</h4>
+            <p className="text-gray-600 text-sm mb-6">
+              Questions about a repair, a quote or a spare part? Call us or send us a message on WhatsApp.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 mb-8">
+              <a
+                href={PHONE_TEL}
+                className="flex-1 inline-flex items-center justify-center gap-2 bg-accent text-white py-3 px-5 rounded-full font-medium hover:opacity-90 transition-opacity"
+              >
+                <Phone className="w-4 h-4" />
+                Call Us
+              </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 inline-flex items-center justify-center gap-2 bg-[#25d366] text-white py-3 px-5 rounded-full font-medium hover:opacity-90 transition-opacity"
+              >
+                <Image
+                  src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                  alt=""
+                  width={18}
+                  height={18}
+                />
+                WhatsApp Us
+              </a>
+            </div>
+
+            <div className="space-y-5">
+              <div className="flex gap-4">
+                <Phone className="text-accent shrink-0" />
+                <div>
+                  <strong className="block text-gray-900 text-sm">Phone / WhatsApp</strong>
+                  <a href={PHONE_TEL} className="text-gray-600 text-sm hover:text-accent font-semibold">{PHONE_DISPLAY}</a>
                 </div>
-                <h4 className="text-2xl font-bold text-gray-900">Mail Sent!</h4>
-                <p className="text-gray-600 max-w-sm">
-                  Thank you for contacting us. We will get back to you soon. For a faster response, please call us at 071 618 8187 or WhatsApp us at 071 618 8187.
-                </p>
-                <button 
-                  onClick={() => setIsSuccess(false)}
-                  className="mt-4 flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-800 px-6 py-2.5 rounded-md font-medium transition-colors"
-                >
-                  <Send className="w-4 h-4" />
-                  Send Another Email
-                </button>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <input type="hidden" name="_subject" value="New Contact Form Submission - NSS Auto Web" />
-                <input type="hidden" name="_captcha" value="false" />
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                  <input name="name" type="text" required className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                  <input name="email" type="email" required className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                  <input name="phone" type="tel" className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                  <textarea name="message" rows={4} required className="w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"></textarea>
-                </div>
-                <button 
-                  type="submit" 
-                  disabled={isLoading}
-                  className="bg-accent text-white py-2.5 px-4 rounded-md font-medium hover:opacity-90 transition-opacity disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center"
-                >
-                  {isLoading ? (
-                    <>
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Sending...
-                    </>
-                  ) : "Send Message"}
-                </button>
-              </form>
-            )}
-          </div>
 
-          {/* Info Card */}
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-fit">
-            <h4 className="font-bold text-lg mb-6">Workshop Info</h4>
-            
-            <div className="space-y-6">
+              <div className="flex gap-4">
+                <Mail className="text-accent shrink-0" />
+                <div>
+                  <strong className="block text-gray-900 text-sm">Email</strong>
+                  <a href={`mailto:${EMAIL}`} className="text-gray-600 text-sm hover:text-accent font-semibold">{EMAIL}</a>
+                </div>
+              </div>
+
               <div className="flex gap-4">
                 <MapPin className="text-accent shrink-0" />
                 <div>
                   <strong className="block text-gray-900 text-sm">Location</strong>
                   <p className="text-gray-600 text-sm">Negombo - Colombo Main Rd, Ja-Ela</p>
-                </div>
-              </div>
-              
-              <div className="flex gap-4">
-                <Phone className="text-accent shrink-0" />
-                <div>
-                  <strong className="block text-gray-900 text-sm">Phone</strong>
-                  <a href="tel:+94716188187" className="text-gray-600 text-sm hover:text-accent font-semibold">+94 71 618 8187</a>
                 </div>
               </div>
 
@@ -130,6 +94,53 @@ export default function Contact() {
                   <p className="text-gray-500 text-xs">Sunday: Closed</p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-6">
+            {/* Send a suggestion */}
+            <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm border border-gray-100">
+              <div className="flex items-center gap-3 mb-2">
+                <Lightbulb className="text-accent shrink-0" />
+                <h4 className="font-bold text-xl text-gray-900">Send a Suggestion</h4>
+              </div>
+              <p className="text-gray-600 text-sm mb-5">
+                Have an idea on how we can serve you better? We&apos;d love to hear your thoughts.
+              </p>
+              <a
+                href={suggestionUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gray-900 text-white py-2.5 px-5 rounded-full text-sm font-medium hover:bg-accent transition-colors"
+              >
+                Send a Suggestion
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Join our team */}
+            <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm border border-gray-100">
+              <div className="flex items-center gap-3 mb-2">
+                <Briefcase className="text-accent shrink-0" />
+                <h4 className="font-bold text-xl text-gray-900">Join Our Team</h4>
+              </div>
+              <p className="text-gray-600 text-sm mb-4">
+                Looking for a career as a mechanic, technician or in spare parts sales? Email us at{" "}
+                <a href={`mailto:${EMAIL}`} className="font-semibold text-gray-900 hover:text-accent">{EMAIL}</a>.
+              </p>
+              <p className="text-gray-900 text-sm font-semibold mb-2">How to apply</p>
+              <ol className="list-decimal list-inside text-gray-600 text-sm space-y-1 mb-5">
+                {applySteps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ol>
+              <a
+                href={applyUrl}
+                className="inline-flex items-center gap-2 bg-gray-900 text-white py-2.5 px-5 rounded-full text-sm font-medium hover:bg-accent transition-colors"
+              >
+                Apply by Email
+                <ArrowRight className="w-4 h-4" />
+              </a>
             </div>
           </div>
         </div>
