@@ -12,6 +12,7 @@ const navLinks = [
   { name: "Gallery", href: "/#gallery", id: "gallery" },
   { name: "Map", href: "/#map", id: "map" },
   { name: "Contact", href: "/#contact", id: "contact" },
+  { name: "Browse Spare Parts", href: "/spare-parts", id: "catalog" },
 ];
 
 export default function Navbar() {
@@ -20,7 +21,7 @@ export default function Navbar() {
   const [sectionInView, setSectionInView] = useState<string | null>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const activeId = isHome ? sectionInView : pathname.startsWith("/spare-parts") ? "spareparts" : null;
+  const activeId = isHome ? sectionInView : pathname.startsWith("/spare-parts") ? "catalog" : null;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,7 +67,18 @@ export default function Navbar() {
       <div className="max-w-[1100px] mx-auto px-4 flex items-center justify-between">
 
         {/* Logo Section */}
-        <Link href="/" className="flex flex-col items-center justify-center leading-none hover:opacity-80 transition-opacity">
+        <Link
+          href="/"
+          onClick={(e) => {
+            // Already on the homepage: scroll back up to the hero instead of a no-op navigation
+            if (!isHome) return;
+            e.preventDefault();
+            setIsMobileMenuOpen(false);
+            window.history.replaceState(null, "", "/");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+          className="flex flex-col items-center justify-center leading-none hover:opacity-80 transition-opacity"
+        >
           <Image
             src="/assets/logo.png"
             alt="NSS Auto Logo"
@@ -83,7 +95,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-8">
           <nav className="flex gap-6">
             {navLinks.map((link) => {
               const isActive = activeId === link.id;
@@ -91,7 +103,7 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`relative font-semibold py-1 transition-colors after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:w-full after:bg-accent after:origin-left after:transition-transform after:duration-300 ${
+                  className={`relative whitespace-nowrap font-semibold py-1 transition-colors after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:w-full after:bg-accent after:origin-left after:transition-transform after:duration-300 ${
                     isActive
                       ? "text-accent after:scale-x-100"
                       : "text-gray-800 hover:text-accent after:scale-x-0 hover:after:scale-x-100"
@@ -104,7 +116,7 @@ export default function Navbar() {
           </nav>
           <a
             href={contact.phoneTel}
-            className="inline-flex items-center gap-2 bg-accent text-white px-5 py-2 rounded-full text-sm font-semibold shadow-sm hover:bg-accent-dark transition-colors"
+            className="inline-flex items-center gap-2 whitespace-nowrap bg-accent text-white px-5 py-2 rounded-full text-sm font-semibold shadow-sm hover:bg-accent-dark transition-colors"
           >
             <Phone size={16} />
             Call Us
@@ -113,7 +125,7 @@ export default function Navbar() {
 
         {/* Mobile Hamburger Button */}
         <button
-          className="md:hidden flex flex-col gap-1.5 z-50 p-2 -mr-2"
+          className="lg:hidden flex flex-col gap-1.5 z-50 p-2 -mr-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileMenuOpen}
@@ -125,7 +137,7 @@ export default function Navbar() {
 
         {/* Mobile Menu Backdrop */}
         <div
-          className={`fixed inset-0 h-screen bg-black/40 md:hidden transition-opacity duration-300 ${
+          className={`fixed inset-0 h-screen bg-black/40 lg:hidden transition-opacity duration-300 ${
             isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
           onClick={() => setIsMobileMenuOpen(false)}
@@ -134,7 +146,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         <div
-          className={`fixed top-0 right-0 h-screen w-72 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out pt-24 pb-8 flex flex-col px-6 md:hidden ${
+          className={`fixed top-0 right-0 h-screen w-72 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out pt-24 pb-8 flex flex-col px-6 lg:hidden ${
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >

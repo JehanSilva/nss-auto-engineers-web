@@ -9,6 +9,11 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import MapSection from "@/components/MapSection";
 import GoogleReviews from "@/components/GoogleReviews";
 import Footer from "@/components/Footer";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
