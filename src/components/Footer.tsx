@@ -1,27 +1,20 @@
 import Link from "next/link";
-import { Phone, MapPin, Mail, Facebook, Instagram } from "lucide-react";
+import { Phone, MapPin, Mail } from "lucide-react";
+import { contact } from "@/data/contact";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 text-gray-700 pt-16 border-accent">
+    <footer className="bg-white text-gray-700 pt-16 border-t border-gray-100">
       <div className="max-w-[1100px] mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           
           {/* Brand Column */}
           <div>
             <h2 className="text-2xl font-bold text-accent mb-4">NSS Auto Engineers</h2>
-            <p className="text-sm leading-relaxed mb-6 text-gray-600">
+            <p className="text-sm leading-relaxed text-gray-600">
               Auto repair workshop and spare parts shop in Ja-Ela.
               Specializing in hybrid service and engine diagnostics, with genuine and OEM parts in stock.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all shadow-sm">
-                <Facebook size={20} />
-              </a>
-              <a href="#" className="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all shadow-sm">
-                <Instagram size={20} />
-              </a>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -29,9 +22,10 @@ export default function Footer() {
             <h3 className="text-lg font-bold text-gray-900 mb-6 border-b-2 border-red-100 inline-block pb-1">Quick Links</h3>
             <ul className="space-y-3">
               <li><Link href="/" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Home</Link></li>
-              <li><Link href="/#about" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> About Us</Link></li>
               <li><Link href="/#services" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Services</Link></li>
+              <li><Link href="/spare-parts" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Spare Parts</Link></li>
               <li><Link href="/#gallery" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Gallery</Link></li>
+              <li><Link href="/#map" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Find Us</Link></li>
               <li><Link href="/#contact" className="hover:text-accent transition-colors flex items-center gap-2"><span className="text-accent">›</span> Contact</Link></li>
             </ul>
           </div>
@@ -56,7 +50,7 @@ export default function Footer() {
                 <div className="w-8 h-8 rounded bg-red-50 flex items-center justify-center shrink-0 text-accent">
                    <MapPin size={16} />
                 </div>
-                <span className="text-sm pt-1">Negombo - Colombo Main Rd, Ja-Ela, Sri Lanka</span>
+                <span className="text-sm pt-1">{contact.address}, Sri Lanka</span>
               </li>
               <li className="flex gap-3 items-start">
                 <div className="w-8 h-8 rounded bg-red-50 flex items-center justify-center shrink-0 text-accent">

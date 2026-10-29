@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { Phone, Mail, MapPin, Clock, ArrowRight, Lightbulb, Briefcase } from "lucide-react";
 
-const PHONE_DISPLAY = "+94 71 618 8187";
-const PHONE_TEL = "tel:+94716188187";
-const WHATSAPP_URL = "https://wa.me/94716188187";
-const EMAIL = "info@nssauto.lk";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeading from "@/components/ui/SectionHeading";
+import { contact } from "@/data/contact";
+
+const { phoneDisplay: PHONE_DISPLAY, phoneTel: PHONE_TEL, whatsappUrl: WHATSAPP_URL, email: EMAIL } = contact;
 
 const suggestionUrl = `${WHATSAPP_URL}?text=${encodeURIComponent(
   "Hi NSS Auto Engineers, I have a suggestion: "
@@ -24,15 +25,18 @@ const applySteps = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-12 bg-white">
+    <section id="contact" className="py-16 bg-gray-50">
       <div className="max-w-[1100px] mx-auto px-4">
-        <h3 className="text-2xl font-bold mb-2">Contact Us</h3>
-        <p className="text-gray-600 mb-8">The fastest way to reach us is a call or a WhatsApp message.</p>
+        <SectionHeading
+          eyebrow="Contact Us"
+          title="Get in Touch"
+          subtitle="The fastest way to reach us is a call or a WhatsApp message."
+        />
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Get in touch */}
-          <div className="bg-gray-50 p-6 md:p-8 rounded-lg shadow-sm border border-gray-100">
-            <h4 className="font-bold text-xl text-gray-900 mb-2">Get in Touch</h4>
+          <Reveal className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100">
+            <h3 className="font-bold text-xl text-gray-900 mb-2">Call or Message Us</h3>
             <p className="text-gray-600 text-sm mb-6">
               Questions about a repair, a quote or a spare part? Call us or send us a message on WhatsApp.
             </p>
@@ -82,7 +86,7 @@ export default function Contact() {
                 <MapPin className="text-accent shrink-0" />
                 <div>
                   <strong className="block text-gray-900 text-sm">Location</strong>
-                  <p className="text-gray-600 text-sm">Negombo - Colombo Main Rd, Ja-Ela</p>
+                  <p className="text-gray-600 text-sm">{contact.address}</p>
                 </div>
               </div>
 
@@ -90,19 +94,19 @@ export default function Contact() {
                 <Clock className="text-accent shrink-0" />
                 <div>
                   <strong className="block text-gray-900 text-sm">Working Hours</strong>
-                  <p className="text-gray-600 text-sm">Mon - Sat: 8:30am — 6:00pm</p>
-                  <p className="text-gray-500 text-xs">Sunday: Closed</p>
+                  <p className="text-gray-600 text-sm">{contact.hours}</p>
+                  <p className="text-gray-500 text-xs">{contact.closedDays}</p>
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           <div className="flex flex-col gap-6">
             {/* Send a suggestion */}
-            <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm border border-gray-100">
+            <Reveal delay={100} className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100">
               <div className="flex items-center gap-3 mb-2">
                 <Lightbulb className="text-accent shrink-0" />
-                <h4 className="font-bold text-xl text-gray-900">Send a Suggestion</h4>
+                <h3 className="font-bold text-xl text-gray-900">Send a Suggestion</h3>
               </div>
               <p className="text-gray-600 text-sm mb-5">
                 Have an idea on how we can serve you better? We&apos;d love to hear your thoughts.
@@ -116,13 +120,13 @@ export default function Contact() {
                 Send a Suggestion
                 <ArrowRight className="w-4 h-4" />
               </a>
-            </div>
+            </Reveal>
 
             {/* Join our team */}
-            <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm border border-gray-100">
+            <Reveal delay={200} className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100">
               <div className="flex items-center gap-3 mb-2">
                 <Briefcase className="text-accent shrink-0" />
-                <h4 className="font-bold text-xl text-gray-900">Join Our Team</h4>
+                <h3 className="font-bold text-xl text-gray-900">Join Our Team</h3>
               </div>
               <p className="text-gray-600 text-sm mb-4">
                 Looking for a career as a mechanic, technician or in spare parts sales? Email us at{" "}
@@ -141,7 +145,7 @@ export default function Contact() {
                 Apply by Email
                 <ArrowRight className="w-4 h-4" />
               </a>
-            </div>
+            </Reveal>
           </div>
         </div>
       </div>

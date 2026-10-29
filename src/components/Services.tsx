@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Reveal from "@/components/ui/Reveal";
+import SectionHeading from "@/components/ui/SectionHeading";
 
 const services = [
   { title: "Engine Services", img: "https://res.cloudinary.com/dklcexfun/image/upload/v1770638241/engine-repair_sktvj2.png", desc: "Expert engine tune ups, complete overhauling, and automobile car repair diagnostics." },
@@ -13,24 +15,33 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-12 bg-white">
+    <section id="services" className="py-16 bg-white">
       <div className="max-w-[1100px] mx-auto px-4">
-        <h2 className="text-2xl font-bold mb-8 text-gray-900">Our Services</h2>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <SectionHeading
+          eyebrow="Our Services"
+          title="Complete Care for Your Vehicle"
+          subtitle="From routine servicing to engine overhauls, our mechanics handle hybrid, petrol and diesel vehicles."
+        />
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {services.map((service, idx) => (
-            <div key={idx} className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div className="h-40 w-full relative mb-4 rounded-md overflow-hidden bg-gray-100">
-                <Image
-                  src={`${service.img}`}
-                  alt={service.title}
-                  fill
-                  className="object-cover"
-                />
+            <Reveal key={service.title} delay={(idx % 4) * 80} className="h-full">
+              <div className="group h-full bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className="h-32 md:h-40 w-full relative overflow-hidden bg-gray-100">
+                  <Image
+                    src={service.img}
+                    alt={service.title}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-base md:text-lg font-bold mb-1.5 text-gray-900 group-hover:text-accent transition-colors">{service.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{service.desc}</p>
+                </div>
               </div>
-              <h3 className="text-lg font-bold mb-2 text-gray-800">{service.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{service.desc}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
