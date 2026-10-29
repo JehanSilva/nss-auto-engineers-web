@@ -25,7 +25,6 @@ export const metadata: Metadata = {
     "Reconditioned auto parts",
     "Auto parts delivery",
     "Same-day spare parts shipping",
-    "Wholesale car parts",
     "Toyota Hiace KDH spare parts",
     "Maruti Suzuki Zen Estilo parts",
     "KDH body parts and engine components",
@@ -36,11 +35,7 @@ export const metadata: Metadata = {
     "Replacement for squeaking brakes",
     "Where to buy KDH air filters",
     "Maruti Suzuki spare parts price list",
-    "Best brand for Japanese car oil filters",
-    "Auto parts wholesale Sri Lanka",
-    "Bulk spare parts for fleet maintenance",
-    "Distributor of Cworks parts",
-    "Garage supply spare parts"
+    "Best brand for Japanese car oil filters"
   ],
   openGraph: {
     title: "Genuine Auto Spare Parts Ja-Ela | NSS Auto Engineers",
