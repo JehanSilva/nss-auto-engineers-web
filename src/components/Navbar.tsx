@@ -43,6 +43,9 @@ export default function Navbar() {
           <h1 className="text-[10px] md:text-xs font-bold text-accent uppercase tracking-wide text-center">
             NSS Auto Engineers
           </h1>
+          <span className="text-[9px] md:text-[10px] text-gray-500 font-medium tracking-wide mt-0.5">
+            Repairs & Spare Parts
+          </span>
         </Link>
 
         {/* Desktop Nav */}

@@ -11,8 +11,8 @@ export default function Footer() {
           <div>
             <h2 className="text-2xl font-bold text-accent mb-4">NSS Auto Engineers</h2>
             <p className="text-sm leading-relaxed mb-6 text-gray-600">
-              Your trusted partner for expert auto repair and maintenance in Ja-Ela. 
-              Specializing in hybrid service, engine diagnostics, and genuine spare parts.
+              Auto repair workshop and spare parts shop in Ja-Ela.
+              Specializing in hybrid service and engine diagnostics, with genuine and OEM parts in stock.
             </p>
             <div className="flex gap-4">
               <a href="#" className="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center text-accent hover:bg-accent hover:text-white transition-all shadow-sm">

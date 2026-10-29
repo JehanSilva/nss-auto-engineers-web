@@ -17,11 +17,11 @@ export default function Home() {
       <Hero />
       
       <Services />
-      
-      <Gallery />
-      
+
       <SpareParts />
-      
+
+      <Gallery />
+
       <GoogleReviews />
       
       <MapSection />
