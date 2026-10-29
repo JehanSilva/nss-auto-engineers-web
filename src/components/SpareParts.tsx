@@ -48,7 +48,7 @@ export default function SpareParts() {
                     src={brand.logo}
                     alt={`${brand.name} logo`}
                     fill
-                    className="object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    className="object-contain group-hover:scale-105 transition-transform duration-300"
                     sizes="(max-width: 640px) 50vw, 25vw"
                   />
                 </div>

@@ -127,9 +127,9 @@ export const metadata: Metadata = {
     siteName: 'NSS Auto Engineers Ja-Ela',
     images: [
       {
-        url: '/assets/sponser-banner-2.png',
-        width: 1200,
-        height: 630,
+        url: 'https://res.cloudinary.com/dklcexfun/image/upload/v1770638248/sponser-banner-2_jckbpp.png',
+        width: 1366,
+        height: 342,
         alt: 'NSS Auto Engineers Auto Repair Workshop in Ja-Ela',
       },
     ],
@@ -140,7 +140,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'NSS Auto Engineers - Auto Repair & Spare Parts in Ja-Ela',
     description: "Expert auto repair services in Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, and genuine spare parts for all vehicle makes. Reliable 24-hour emergency mechanic and auto garage near Ja-Ela.",
-    images: ['/assets/sponser-banner-2.png'],
+    images: ['https://res.cloudinary.com/dklcexfun/image/upload/v1770638248/sponser-banner-2_jckbpp.png'],
   },
   icons: {
     icon: '/assets/favicon.png',
@@ -177,7 +177,7 @@ export default function RootLayout({
               "@type": ["AutoRepair", "AutoPartsStore"],
               "name": "NSS Auto Engineers",
               "description": "Expert auto repair services in Ja-Ela & best mechanic near Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, A/C repair, and brake replacement. We are a reliable 24-hour emergency auto garage offering affordable same-day car repair and genuine spare parts for all vehicle makes.",
-              "image": "https://www.nssauto.lk/assets/sponser-banner-2.png",
+              "image": "https://res.cloudinary.com/dklcexfun/image/upload/v1770638248/sponser-banner-2_jckbpp.png",
               "url": "https://www.nssauto.lk",
               "telephone": "+94716188187",
               "address": {
