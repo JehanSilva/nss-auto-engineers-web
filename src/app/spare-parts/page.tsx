@@ -41,8 +41,6 @@ const baseMetadata: Metadata = {
     "Genuine spare parts",
     "High-quality aftermarket parts",
     "Reconditioned auto parts",
-    "Auto parts delivery",
-    "Same-day spare parts shipping",
     "Toyota Hiace KDH spare parts",
     "Maruti Suzuki Zen Estilo parts",
     "KDH body parts and engine components",
