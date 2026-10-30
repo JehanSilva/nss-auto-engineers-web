@@ -28,6 +28,8 @@ export default function SparePartsSearch({ compact = false }: { compact?: boolea
     params.delete('brand');
     params.delete('part_number');
     params.delete('vehicle');
+    // A new search starts from the first page of results
+    params.delete('show');
 
     const query = params.toString();
     return query ? `${CATALOG_PATH}?${query}` : CATALOG_PATH;
