@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     default: "NSS Auto Engineers - Auto Repair & Spare Parts Shop in Ja-Ela",
     template: "%s | NSS Auto Engineers Ja-Ela"
   },
-  description: "Expert auto repair services in Ja-Ela & best mechanic near Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, A/C repair, and brake replacement. We are a reliable 24-hour emergency auto garage offering affordable same-day car repair. Visit our auto parts store for genuine spare parts for all vehicle makes, Toyota KDH & Maruti Suzuki parts, and Cworks filters. Full vehicle inspection and maintenance.",
+  description: "Expert auto repair services in Ja-Ela & best mechanic near Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, A/C repair, and brake replacement. Open Monday to Saturday, 8:30am to 6:00pm. Visit our auto parts store for genuine spare parts for all vehicle makes, Toyota KDH & Maruti Suzuki parts, and Cworks filters. Full vehicle inspection and maintenance.",
   keywords: [
     "car repair shop in ja ela", 
     "auto repair in ja ela", 
@@ -30,9 +30,7 @@ export const metadata: Metadata = {
     "Auto garage near reality plaza",
     "Auto garage in ja ela",
     "Car repair in ja-ela",
-    "24-hour emergency mechanic",
     "Auto shop open on Saturday",
-    "Same-day car repair",
     "Affordable car service",
     "Reliable auto repair shop",
     "Professional vehicle maintenance",
@@ -80,7 +78,6 @@ export const metadata: Metadata = {
     "emission test prep",
     "Collision repair",
     "dent removal",
-    "car spray painting",
     "windshield crack repair",
     "Hybrid battery testing",
     "electric vehicle motor service",
@@ -104,7 +101,6 @@ export const metadata: Metadata = {
     "Petrol engine tune-up",
     "Radiator replacement",
     "Car AC gas charging",
-    "Car wash and detailing",
     "Car diagnostic testing",
     "Car garage Ja-Ela",
     "Auto garage Sri Lanka",
@@ -122,7 +118,7 @@ export const metadata: Metadata = {
   publisher: "NSS Auto Engineers",
   openGraph: {
     title: "NSS Auto Engineers - Auto Repair & Spare Parts Shop in Ja-Ela",
-    description: "Expert auto repair services in Ja-Ela. Specializing in engine repair, hybrid battery service, scanning, genuine spare parts for all vehicle makes, 24-hour emergency mechanic, auto AC repair, and brake replacement. Best auto garage near Ja-Ela.",
+    description: "Expert auto repair services in Ja-Ela. Specializing in engine repair, hybrid battery service, scanning, genuine spare parts for all vehicle makes, auto AC repair, and brake replacement. Best auto garage near Ja-Ela.",
     url: 'https://www.nssauto.lk',
     siteName: 'NSS Auto Engineers Ja-Ela',
     images: [
@@ -139,7 +135,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'NSS Auto Engineers - Auto Repair & Spare Parts in Ja-Ela',
-    description: "Expert auto repair services in Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, and genuine spare parts for all vehicle makes. Reliable 24-hour emergency mechanic and auto garage near Ja-Ela.",
+    description: "Expert auto repair services in Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, and genuine spare parts for all vehicle makes. Reliable mechanic and auto garage near Ja-Ela.",
     images: ['https://res.cloudinary.com/dklcexfun/image/upload/v1770638248/sponser-banner-2_jckbpp.png'],
   },
   icons: {
@@ -176,21 +172,21 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": ["AutoRepair", "AutoPartsStore"],
               "name": "NSS Auto Engineers",
-              "description": "Expert auto repair services in Ja-Ela & best mechanic near Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, A/C repair, and brake replacement. We are a reliable 24-hour emergency auto garage offering affordable same-day car repair and genuine spare parts for all vehicle makes.",
+              "description": "Expert auto repair services in Ja-Ela & best mechanic near Ja-Ela. Specializing in engine repair, hybrid battery service, vehicle scanning, A/C repair, and brake replacement. We also run a spare parts shop with genuine and OEM parts for all vehicle makes.",
               "image": "https://res.cloudinary.com/dklcexfun/image/upload/v1770638248/sponser-banner-2_jckbpp.png",
               "url": "https://www.nssauto.lk",
               "telephone": "+94716188187",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "NSS Auto Engineers",
+                "streetAddress": "No. 272, Negombo Road, Thudella",
                 "addressLocality": "Ja-Ela",
                 "addressRegion": "Western Province",
                 "addressCountry": "LK"
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": 7.0784, 
-                "longitude": 79.8913 
+                "latitude": 7.086986,
+                "longitude": 79.890152
               },
               "openingHoursSpecification": {
                 "@type": "OpeningHoursSpecification",
