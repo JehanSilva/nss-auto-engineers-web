@@ -1,30 +1,22 @@
-'use client';
-
-import { useState } from 'react';
+import Link from 'next/link';
 import { SparePart } from '@/services/spareParts';
 import SparePartCard from '@/components/SparePartCard';
+import ShowMoreButton from '@/components/ShowMoreButton';
 
 interface SparePartsListProps {
+  /** Only the parts to render; the server slices the full result set */
   parts: SparePart[];
+  total: number;
+  /** URL that loads the next batch, when there are more */
+  nextHref?: string;
 }
 
-const ITEMS_PER_PAGE = 20;
-
-export default function SparePartsList({ parts }: SparePartsListProps) {
-  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
-
-  const visibleParts = parts.slice(0, visibleCount);
-  const hasMore = visibleCount < parts.length;
-
-  const handleShowMore = () => {
-    setVisibleCount((prev) => prev + ITEMS_PER_PAGE);
-  };
-
-  if (parts.length === 0) {
+export default function SparePartsList({ parts, total, nextHref }: SparePartsListProps) {
+  if (total === 0) {
     return (
       <div className="text-center py-12">
         <p className="text-xl text-gray-500">No spare parts found matching your criteria.</p>
-        <a href="/spare-parts" className="text-accent hover:underline mt-2 inline-block">View all parts</a>
+        <Link href="/spare-parts" className="text-accent hover:underline mt-2 inline-block">View all parts</Link>
       </div>
     );
   }
@@ -32,21 +24,16 @@ export default function SparePartsList({ parts }: SparePartsListProps) {
   return (
     <div>
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 mb-12">
-        {visibleParts.map((part) => (
+        {parts.map((part) => (
           <SparePartCard key={part.id} part={part} />
         ))}
       </div>
 
-      {hasMore && (
+      {nextHref && (
         <div className="text-center">
-          <button
-            onClick={handleShowMore}
-            className="px-8 py-3 bg-accent text-white rounded-full font-semibold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
-          >
-            Show More
-          </button>
+          <ShowMoreButton href={nextHref} />
           <p className="text-sm text-gray-500 mt-4">
-            Showing {visibleParts.length} of {parts.length} parts
+            Showing {parts.length} of {total} parts
           </p>
         </div>
       )}

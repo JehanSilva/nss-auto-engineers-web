@@ -20,7 +20,10 @@ type SearchParams = Promise<{
   part_number?: string;
   vehicle?: string;
   category?: string;
+  show?: string;
 }>;
+
+const PAGE_SIZE = 20;
 
 const baseMetadata: Metadata = {
   title: { absolute: "Genuine Auto Spare Parts Ja-Ela | NSS Auto Engineers" },
@@ -150,6 +153,24 @@ export default async function SparePartsPage({ searchParams }: { searchParams: S
     return true;
   });
 
+  // Only send the cards on screen to the browser; "Show More" asks the server for the next batch
+  const requested = Number.parseInt(resolvedSearchParams?.show ?? "", 10);
+  const show = Number.isFinite(requested) && requested > PAGE_SIZE ? requested : PAGE_SIZE;
+  const visibleParts = parts
+    .slice(0, show)
+    // Cards don't display compatible vehicles, so don't ship them
+    .map((part) => ({ ...part, compatible_vehicles: [] }));
+
+  let nextHref: string | undefined;
+  if (show < parts.length) {
+    const params = new URLSearchParams();
+    Object.entries(resolvedSearchParams ?? {}).forEach(([key, value]) => {
+      if (typeof value === "string" && value) params.set(key, value);
+    });
+    params.set("show", String(show + PAGE_SIZE));
+    nextHref = `/spare-parts?${params.toString()}`;
+  }
+
   return (
     <main className="min-h-screen bg-gray-50">
       <Navbar />
@@ -177,7 +198,7 @@ export default async function SparePartsPage({ searchParams }: { searchParams: S
             </>
           )}
 
-          <SparePartsList key={`${category?.slug ?? "all"}-${q}`} parts={parts} />
+          <SparePartsList parts={visibleParts} total={parts.length} nextHref={nextHref} />
         </div>
       </section>
 
