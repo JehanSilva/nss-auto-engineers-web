@@ -19,6 +19,8 @@ export default function SparePartsSearch({ compact = false }: { compact?: boolea
 
     if (term) {
       params.set('q', term);
+      // Searching covers the whole catalog, so leave the selected category
+      params.delete('category');
     } else {
       params.delete('q');
     }
